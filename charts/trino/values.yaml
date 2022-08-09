@@ -189,6 +189,12 @@ coordinator:
     # failureThreshold: 6
     # successThreshold: 1
 
+  nodeSelector: { }
+
+  tolerations: [ ]
+
+  affinity: { }
+
 worker:
   jvm:
     maxHeapSize: "8G"
@@ -223,6 +229,12 @@ worker:
     # timeoutSeconds: 5
     # failureThreshold: 6
     # successThreshold: 1
+
+  nodeSelector: { }
+
+  tolerations: [ ]
+
+  affinity: { }
 
 kafka:
   mountPath: "/etc/trino/schemas"
