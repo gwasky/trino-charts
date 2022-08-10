@@ -47,7 +47,7 @@ server:
     maxReplicas: 5
     targetCPUUtilizationPercentage: 50
 
-accessControl: { }
+accessControl: {}
   # type: configmap
   # refreshPeriod: 60s
   # # Rules file is mounted to /etc/trino/access-control
@@ -94,44 +94,35 @@ accessControl: { }
   #           "catalog": "default",
   #           "schema": "default",
   #           "owner": true
-#         }
-#       ]
-#     }
+  #         }
+  #       ]
+  #     }
 
-additionalNodeProperties: { }
+additionalNodeProperties: {}
 
-additionalConfigProperties: { }
+additionalConfigProperties: {}
 
-additionalLogProperties: { }
+additionalLogProperties: {}
 
-additionalExchangeManagerProperties: { }
+additionalExchangeManagerProperties: {}
 
-eventListenerProperties: { }
+eventListenerProperties: {}
 
-additionalCatalogs:
-  hive: |
-    connector.name=hive
-    hive.metastore=glue
-    hive.metastore.glue.region=eu-central-1
-    hive.metastore.glue.default-warehouse-dir=
-    hive.metastore.glue.aws-access-key=
-    hive.metastore.glue.aws-secret-key=
-    hive.s3.aws-access-key=
-    hive.s3.aws-secret-key=
+additionalCatalogs: {}
 
 # Array of EnvVar (https://v1-18.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#envvar-v1-core)
-env: [ ]
+env: []
 
-initContainers: { }
+initContainers: {}
   # coordinator:
   #   - name: init-coordinator
   #     image: busybox:1.28
   #     imagePullPolicy: IfNotPresent
   #     command: ['sh', '-c', "until nslookup myservice.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for myservice; sleep 2; done"]
   # worker:
-#   - name: init-worker
-#     image: busybox:1.28
-#     command: ['sh', '-c', 'echo The worker is running! && sleep 3600']
+  #   - name: init-worker
+  #     image: busybox:1.28
+  #     command: ['sh', '-c', 'echo The worker is running! && sleep 3600']
 
 securityContext:
   runAsUser: 1000
@@ -141,27 +132,27 @@ service:
   type: ClusterIP
   port: 8080
 
-nodeSelector: { }
+nodeSelector: {}
 
-tolerations: [ ]
+tolerations: []
 
-affinity: { }
+affinity: {}
 
-auth: { }
-# Set username and password
-# https://trino.io/docs/current/security/password-file.html#file-format
-# passwordAuth: "username:encrypted-password-with-htpasswd"
+auth: {}
+  # Set username and password
+  # https://trino.io/docs/current/security/password-file.html#file-format
+  # passwordAuth: "username:encrypted-password-with-htpasswd"
 
 serviceAccount:
   # Specifies whether a service account should be created
-  create: true
+  create: false
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
-  name: "trino"
+  name: ""
   # Annotations to add to the service account
-  annotations: { }
+  annotations: {}
 
-secretMounts: [ ]
+secretMounts: []
 
 coordinator:
   jvm:
@@ -171,9 +162,9 @@ coordinator:
       g1:
         heapRegionSize: "32M"
 
-  additionalJVMConfig: { }
+  additionalJVMConfig: {}
 
-  resources: { }
+  resources: {}
     # We usually recommend not to specify default resources and to leave this as a conscious
     # choice for the user. This also increases chances charts run on environments with little
     # resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -181,50 +172,40 @@ coordinator:
     # limits:
     #   cpu: 100m
     #   memory: 128Mi
-  # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
 
-  livenessProbe: { }
+  livenessProbe: {}
     # initialDelaySeconds: 20
     # periodSeconds: 10
-  # timeoutSeconds: 5
-  # failureThreshold: 6
-  # successThreshold: 1
-  readinessProbe: { }
+    # timeoutSeconds: 5
+    # failureThreshold: 6
+    # successThreshold: 1
+  readinessProbe: {}
     # initialDelaySeconds: 20
     # periodSeconds: 10
-  # timeoutSeconds: 5
-  # failureThreshold: 6
-  # successThreshold: 1
+    # timeoutSeconds: 5
+    # failureThreshold: 6
+    # successThreshold: 1
 
   nodeSelector: { }
 
-  tolerations: [ { "key": "intent", "operator": "Equal", "value": "apps", "effect": "NoSchedule" } ]
-  #
-  affinity: {
-    "nodeAffinity": {
-      "requiredDuringSchedulingIgnoredDuringExecution": {
-        "nodeSelectorTerms": [
-          { "matchExpressions": [
-            { "key": "intent","operator": "In","values": [ "controller" ] }
-          ] }
-        ]
-      }
-    }
-  }
+  tolerations: [ ]
+
+  affinity: { }
 
 worker:
   jvm:
-    maxHeapSize: "4G"
+    maxHeapSize: "8G"
     gcMethod:
       type: "UseG1GC"
       g1:
         heapRegionSize: "32M"
 
-  additionalJVMConfig: { }
+  additionalJVMConfig: {}
 
-  resources: { }
+  resources: {}
     # We usually recommend not to specify default resources and to leave this as a conscious
     # choice for the user. This also increases chances charts run on environments with little
     # resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -232,48 +213,32 @@ worker:
     # limits:
     #   cpu: 100m
     #   memory: 128Mi
-  # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
 
-  livenessProbe: { }
+  livenessProbe: {}
     # initialDelaySeconds: 20
     # periodSeconds: 10
-  # timeoutSeconds: 5
-  # failureThreshold: 6
-  # successThreshold: 1
-  readinessProbe: { }
+    # timeoutSeconds: 5
+    # failureThreshold: 6
+    # successThreshold: 1
+  readinessProbe: {}
     # initialDelaySeconds: 20
     # periodSeconds: 10
-  # timeoutSeconds: 5
-  # failureThreshold: 6
-  # successThreshold: 1
+    # timeoutSeconds: 5
+    # failureThreshold: 6
+    # successThreshold: 1
 
   nodeSelector: { }
 
-  tolerations: [
-    { "key": "intent",
-      "operator": "Equal",
-      "value": "apps",
-      "effect": "NoSchedule"
-    }
-  ]
+  tolerations: [ ]
 
-  affinity: {
-    "nodeAffinity": {
-      "requiredDuringSchedulingIgnoredDuringExecution": {
-        "nodeSelectorTerms": [
-          { "matchExpressions": [
-            { "key": "intent","operator": "In","values": [ "apps","workers" ] }
-          ] }
-        ]
-      }
-    }
-  }
+  affinity: { }
 
 kafka:
   mountPath: "/etc/trino/schemas"
-  tableDescriptions: { }
+  tableDescriptions: {}
     # Custom kafka table descriptions that will be mounted in mountPath
     # testschema.json: |-
     #   {
@@ -304,6 +269,6 @@ kafka:
     #           "mapping": "test_field",
     #           "type": "VARCHAR"
     #         }
-  #       ]
-  #     }
-  #   }
+    #       ]
+    #     }
+    #   }
